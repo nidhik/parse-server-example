@@ -1,5 +1,6 @@
 const Mux = require('@mux/mux-node');
 const uuid = require('uuid/v1');
+const { json } = require('micro');
 
 // This assumes you have MUX_TOKEN_ID and MUX_TOKEN_SECRET 
 // environment variables.
@@ -42,7 +43,7 @@ Parse.Cloud.define('webhook', async function(req) {
   console.log('received mux event! ' + eventType);
   
   const Post = Parse.Object.extend("Post")
-  
+
   switch (eventType) {
     case 'video.asset.created': {
       const query = new Parse.Query(Post);

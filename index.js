@@ -4,7 +4,6 @@
 var express = require('express');
 var ParseServer = require('parse-server').ParseServer;
 var path = require('path');
-const { json } = require('micro');
 
 var databaseUri = process.env.DATABASE_URI || process.env.MONGODB_URI;
 
