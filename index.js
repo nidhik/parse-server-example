@@ -4,6 +4,7 @@
 var express = require('express');
 var ParseServer = require('parse-server').ParseServer;
 var path = require('path');
+const { json } = require('micro');
 
 var databaseUri = process.env.DATABASE_URI || process.env.MONGODB_URI;
 
@@ -55,6 +56,8 @@ httpServer.listen(port, function() {
 ParseServer.createLiveQueryServer(httpServer);
 
 app.post('/mux', async function(req, res) {
-  Parse.Cloud.run('webhook', {}, {})
+  const { type: eventType, data: eventData } = await json(req);
+  console.log('received mux event! ' + eventType);
+  Parse.Cloud.run('webhook', { eventType: eventType, eventData: eventData } , {})
   res.status(200).send("Thanks, Mux!")
 });
