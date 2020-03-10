@@ -5,8 +5,6 @@ var express = require('express');
 var ParseServer = require('parse-server').ParseServer;
 var path = require('path');
 const { json } = require('micro');
-var Parse = require('parse').Parse;
-Parse.initialize(process.env.APP_ID, process.env.JAVASCRIPT_KEY); 
 
 var databaseUri = process.env.DATABASE_URI || process.env.MONGODB_URI;
 
@@ -58,34 +56,6 @@ httpServer.listen(port, function() {
 ParseServer.createLiveQueryServer(httpServer);
 
 app.post('/mux', async function(req, res) {
-  const { type: eventType, data: eventData } = await json(req);
-  const Post = Parse.Object.extend("Post");
-  
-  switch (eventType) {
-    case 'video.asset.created': {
-      const query = new Parse.Query(Post);
-      query.equalTo("passthrough", eventData.passthrough);
-      const post = await query.first()
-      if (post.get("status") !== 'ready') {
-        post.set('status', 'created')
-        post.set('asset', eventData)
-        post.save()
-      }
-      break;
-    };
-    case 'video.asset.ready': {
-      const query = new Parse.Query(Post);
-      query.equalTo("passthrough", eventData.passthrough);
-      const post = await query.first()
-      post.set('status', 'ready')
-      post.set('asset', eventData)
-      post.save()
-      break;
-    };
-    default:
-      // ignore the rest
-      console.log('some other mux event! ' + eventType);
-  }
-  // Now send back that ID and the upload URL so the client can use it!
+  Parse.Cloud.run('webhook', {}, {})
   res.status(200).send("Thanks, Mux!")
 });

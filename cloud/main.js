@@ -36,3 +36,34 @@ Parse.Cloud.define('upload', async function(req) {
     return({error: error});
   })
 });
+
+Parse.Cloud.define('webhook', async function(req) {
+  const { type: eventType, data: eventData } = await json(req);
+  console.log('received mux event! ' + eventType);
+  
+  const Post = Parse.Object.extend("Post")
+  
+  switch (eventType) {
+    case 'video.asset.created': {
+      const query = new Parse.Query(Post);
+      query.equalTo("passthrough", eventData.passthrough);
+      const post = await query.first()
+      if (post.get("status") !== 'ready') {
+        post.set('status', 'created')
+        post.set('asset', eventData)
+        return post.save()
+      }
+    };
+    case 'video.asset.ready': {
+      const query = new Parse.Query(Post);
+      query.equalTo("passthrough", eventData.passthrough);
+      const post = await query.first()
+      post.set('status', 'ready')
+      post.set('asset', eventData)
+      return post.save()
+    };
+    default:
+      // ignore the rest
+      console.log('some other mux event! ' + eventType);
+  }
+});
