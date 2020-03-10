@@ -26,7 +26,7 @@ Parse.Cloud.define('upload', async function(req, res) {
   });
   var post = new Post()
   post.set("uploadId", upload.id);
-  post.set("metadata", assetInfo);
+  // post.set("metadata", assetInfo);
   post.set("status", 'waiting_for_upload');
   
    // Now send back that ID and the upload URL so the client can use it!
