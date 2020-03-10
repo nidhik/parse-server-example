@@ -6,7 +6,7 @@ const uuid = require('uuid/v1');
 const { Video } = new Mux();
 
 
-Parse.Cloud.define('upload', function(req, res) {
+Parse.Cloud.define('upload', async function(req, res) {
   const id = uuid();
   
   // Create a new upload using the Mux SDK.
