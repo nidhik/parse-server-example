@@ -9,10 +9,13 @@
   },
   "license": "MIT",
   "dependencies": {
+    "@mux/mux-node": "^2.6.0",
     "express": "~4.11.x",
     "kerberos": "~0.0.x",
+    "micro": "^9.3.4",
     "parse": "~1.8.0",
-    "parse-server": "*"
+    "parse-server": "*",
+    "uuid": "^7.0.2"
   },
   "scripts": {
     "start": "node index.js"
