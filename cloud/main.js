@@ -30,8 +30,8 @@ Parse.Cloud.define('upload', async function(req, res) {
   post.set("status", 'waiting_for_upload');
   post.save().then((post) => {
     // Now send back that ID and the upload URL so the client can use it!
-    response.success({id: id, url: upload.url });
+    res.success({id: id, url: upload.url });
   }, (error) => {
-    response.error(error);
+    respresnse.error(error);
   })
 });
