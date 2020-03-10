@@ -55,7 +55,6 @@ httpServer.listen(port, function() {
 ParseServer.createLiveQueryServer(httpServer);
 
 app.post('/mux', function(req, res) {
-  console.log("RECEVIED mux event from: " + req.body.From);
-  console.log("Body: " + req.body.Body);
+  console.log("RECEVIED mux event: " + req.body);
   res.status(200)
 });
