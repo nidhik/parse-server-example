@@ -63,6 +63,6 @@ Parse.Cloud.define('webhook', async function(req) {
     };
     default:
       // ignore the rest
-      console.log('some other mux event! ' + eventType);
+      console.log('some other mux event! ' + req.params.eventType);
   }
 });
