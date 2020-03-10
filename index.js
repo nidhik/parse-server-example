@@ -4,6 +4,8 @@
 var express = require('express');
 var ParseServer = require('parse-server').ParseServer;
 var path = require('path');
+var bodyParser = require('body-parser');
+app.use( bodyParser.json() );
 
 var databaseUri = process.env.DATABASE_URI || process.env.MONGODB_URI;
 
@@ -55,6 +57,7 @@ httpServer.listen(port, function() {
 ParseServer.createLiveQueryServer(httpServer);
 
 app.post('/mux', function(req, res) {
-  console.log("RECEVIED mux event: " + req.body);
-  res.status(200)
+  var body = request.body;
+  console.log("RECEVIED mux event: " + body);
+  res.status(200).send({})
 });
