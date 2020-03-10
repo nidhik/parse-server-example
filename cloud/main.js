@@ -26,6 +26,7 @@ Parse.Cloud.define('upload', async function(req) {
   });
   var post = new Post()
   post.set("uploadId", upload.id);
+  post.set("passthrough", id);
   // post.set("metadata", assetInfo);
   post.set("status", 'waiting_for_upload');
   return post.save().then((post) => {
