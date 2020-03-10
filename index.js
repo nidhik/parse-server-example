@@ -55,7 +55,7 @@ httpServer.listen(port, function() {
 // This will enable the Live Query real-time server
 ParseServer.createLiveQueryServer(httpServer);
 
-app.post('/mux', function(req, res) {
+app.post('/mux', async function(req, res) {
   const { type: eventType, data: eventData } = await json(req);
   console.log("RECEVIED mux event: " + eventType);
   console.log("Data: " + eventData);
