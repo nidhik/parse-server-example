@@ -4,8 +4,7 @@
 var express = require('express');
 var ParseServer = require('parse-server').ParseServer;
 var path = require('path');
-var bodyParser = require('body-parser');
-app.use( bodyParser.json() );
+const { json, send } = require('micro');
 
 var databaseUri = process.env.DATABASE_URI || process.env.MONGODB_URI;
 
@@ -57,7 +56,8 @@ httpServer.listen(port, function() {
 ParseServer.createLiveQueryServer(httpServer);
 
 app.post('/mux', function(req, res) {
-  var body = request.body;
-  console.log("RECEVIED mux event: " + body);
+  const { type: eventType, data: eventData } = await json(req);
+  console.log("RECEVIED mux event: " + eventType);
+  console.log("Data: " + eventData);
   res.status(200).send({})
 });
