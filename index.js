@@ -53,3 +53,9 @@ httpServer.listen(port, function() {
 
 // This will enable the Live Query real-time server
 ParseServer.createLiveQueryServer(httpServer);
+
+app.post('/mux', function(req, res) {
+  console.log("RECEVIED mux event from: " + req.body.From);
+  console.log("Body: " + req.body.Body);
+  res.status(200)
+});
